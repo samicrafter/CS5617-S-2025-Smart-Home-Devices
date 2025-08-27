@@ -1,300 +1,92 @@
-# 🏠 Smart Home Controller
+Of course. Here is a simplified and focused `README.md` based on your reference image and our project, with the unnecessary sections removed.
 
-A Java Maven application demonstrating the **Interface Segregation Principle (ISP)** through a smart home device management system with a clean Text User Interface (TUI).
+-----
 
-[![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
-[![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+# 🏠 Smart Home - Interface Segregation Principle
 
-## 📋 Table of Contents
+This project is a simple Java application that demonstrates the **Interface Segregation Principle (ISP)**, one of the five SOLID principles of object-oriented design.
 
-- [Overview](#-overview)
-- [Interface Segregation Principle](#-interface-segregation-principle)
-- [Features](#-features)
-- [Architecture](#-architecture)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Testing](#-testing)
-- [Project Structure](#-project-structure)
-- [Contributing](#-contributing)
-- [License](#-license)
+## Overview
 
-## 🎯 Overview
+**Interface Segregation** is a principle that states that no client should be forced to depend on methods it does not use. We achieve this by splitting large, "fat" interfaces into smaller, more specific ones.
 
-This project showcases the **Interface Segregation Principle**, one of the SOLID principles, through a practical smart home controller application. Instead of creating one large interface that forces unnecessary method implementations, we create focused, role-specific interfaces that devices implement based on their actual capabilities.
+The smaller interfaces are specific to a certain functionality. This prevents classes from having to implement methods that are not relevant to them, promoting the **Single Responsibility Principle**, flexibility, and loose coupling in our code.
 
-### Key Learning Objectives
+### Benefits
 
-- ✅ Understand Interface Segregation Principle (ISP)
-- ✅ See practical application of SOLID principles
-- ✅ Learn clean architecture patterns
-- ✅ Explore proper Java coding standards
-- ✅ Practice test-driven development
+  * **Mix and match interfaces**: Classes can implement only the capabilities they need.
+  * **Easy to maintain**: Changes to one interface don't affect classes that don't implement it.
+  * **Increased flexibility**: It's simple to add new capabilities and new types of devices.
+  * **Increased readability**: Code becomes self-documenting; the interfaces a class implements tell you exactly what it can do.
+  * **Easier to test**: Smaller interfaces are easier to mock and test in isolation.
 
-## 🔧 Interface Segregation Principle
+## Design
 
-### ❌ What We Avoid (ISP Violation)
+This project demonstrates the principle with two core components:
+
+1.  **`Switchable` (Interface)**: A small, focused interface that defines the contract for any device that can be turned on or off.
+2.  **`SmartLightBulb` (Class)**: A concrete class that implements the `Switchable` interface. It only needs to provide logic for turning on and off, keeping its design clean and simple.
+
+This approach avoids forcing the `SmartLightBulb` to have methods it doesn't need, like `changeChannel()` or `setTemperature()`.
+
+## The Principle in Code
+
+Here’s a practical look at what the Interface Segregation Principle helps us avoid and achieve.
+
+### ❌ The Wrong Way (A "Fat" Interface)
+
+A single, bloated interface forces a simple plug to have a `setBrightness` method, which makes no sense.
+
 ```java
-// BAD: Fat interface forcing unnecessary implementations
-interface SmartDevice {
-    void turnOn();           // ✓ All devices need this
-    void turnOff();          // ✓ All devices need this
-    void dim(int level);     // ❌ Simple switches don't need this
-    void setColor(String c); // ❌ Most devices don't need this
-    void setTemp(int temp);  // ❌ Lights don't need this
-}
-```
-
-### ✅ What We Implement (ISP Compliant)
-```java
-// GOOD: Segregated interfaces
-interface Switchable {
+// BAD: This interface is too big.
+public interface SmartDevice {
     void turnOn();
     void turnOff();
-    boolean isOn();
-}
-
-interface Dimmable {
-    void dim(int level);
-    int getDimLevel();
-}
-
-interface ColorControllable {
-    void setColor(String color);
-    String getColor();
+    void setBrightness(int level); // Problem: What does a Smart Plug do here?
 }
 ```
 
-## 🚀 Features
+### ✅ The Right Way (Segregated Interfaces)
 
-### Device Types
-- **🔌 Simple Switch**: Basic on/off functionality
-- **💡 Smart Light**: Switching + dimming capabilities
-- **🌈 Colorful Light**: Switching + dimming + color control
+We create small interfaces for each unique capability. A class can then implement only the ones it needs.
 
-### Functionality
-- **Device Management**: Add, list, and control devices
-- **Smart Operations**: Turn on/off, dim, change colors
-- **Capability Detection**: Automatically detect device capabilities
-- **Interactive TUI**: Clean text-based user interface
-- **Comprehensive Testing**: Unit tests demonstrating ISP compliance
+```java
+// GOOD: A focused interface for on/off functionality.
+public interface Switchable {
+  void turnOn();
+  void turnOff();
+  boolean isOn();
+}
 
-### Interface Segregation Benefits
-- **No Bloated Contracts**: Devices implement only needed interfaces
-- **Easy Extension**: Add new device types without breaking existing code
-- **Clear Separation**: Each interface has a single, focused responsibility
-- **Better Maintainability**: Changes to one capability don't affect others
-
-## 🏗️ Architecture
-
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   TUI Layer     │    │  Controller      │    │   Interfaces    │
-│                 │────│                  │────│                 │
-│ SmartHomeTUI    │    │ DeviceController │    │ Switchable      │
-└─────────────────┘    └──────────────────┘    │ Dimmable        │
-                                               │ ColorControl... │
-                                               │ DeviceInfo      │
-                                               └─────────────────┘
-                                                        │
-                                                        │implements
-                                                        ▼
-                                               ┌─────────────────┐
-                                               │   Device Impl   │
-                                               │                 │
-                                               │ SmartLight      │
-                                               │ ColorfulLight   │
-                                               │ SimpleSwitch    │
-                                               └─────────────────┘
+// A simple light bulb only needs to implement this one interface.
+public class SmartLightBulb implements Switchable {
+    // ... implementation for on/off methods ...
+}
 ```
 
-## 📦 Installation
+## How to Run
+
+This is a library-style project, so the main way to verify it is by running the unit tests.
 
 ### Prerequisites
-- ☕ **Java 17+** - [Download here](https://www.oracle.com/java/technologies/downloads/)
-- 📦 **Maven 3.6+** - [Download here](https://maven.apache.org/download.cgi)
-- 💻 **IDE** (IntelliJ IDEA, Eclipse, VS Code)
 
-### Setup Steps
+  * Java (Version 17+)
+  * Maven (Version 3.6+)
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/smart-home-controller.git
-   cd smart-home-controller
-   ```
+### Steps
 
-2. **Verify Java and Maven**
-   ```bash
-   java --version
-   mvn --version
-   ```
+1.  **Compile the code**
+    Open your terminal in the project root and run:
 
-3. **Build the project**
-   ```bash
-   mvn clean compile
-   ```
+    ```bash
+    mvn compile
+    ```
 
-4. **Run tests**
-   ```bash
-   mvn test
-   ```
+2.  **Run the tests**
+    To confirm everything is working as expected, run the tests:
 
-5. **Start the application**
-   ```bash
-   mvn exec:java
-   ```
+    ```bash
+    mvn test
+    ```
 
-## 🎮 Usage
-
-### Running the Application
-
-```bash
-mvn exec:java
-```
-
-### Main Menu Options
-
-```
-╔══════════════════════════════════╗
-║    🏠 Smart Home Controller     ║
-║   Interface Segregation Demo    ║
-╚══════════════════════════════════╝
-
-📋 MENU OPTIONS:
-1. 💡 Turn On Device
-2. ⚫ Turn Off Device
-3. 🔅 Dim Device
-4. 🎨 Set Device Color
-5. 📜 List All Devices
-6. 🔍 Show Device Capabilities
-7. ❌ Exit
-```
-
-### Example Usage Flow
-
-1. **List Devices** (Option 5)
-   ```
-   📜 ALL DEVICES:
-   🔸 Living Room Light [light-001] - OFF (Brightness: 100%)
-      Type: Smart Light
-      Capabilities: Switch Dim
-
-   🔸 Bedroom RGB Light [rgb-002] - OFF (white, 100% brightness)
-      Type: Colorful Smart Light
-      Capabilities: Switch Dim Color
-   ```
-
-2. **Turn On Device** (Option 1)
-   ```
-   Select device to turn ON:
-   1. Living Room Light [light-001] - OFF
-   2. Bedroom RGB Light [rgb-002] - OFF
-   Select device (1-2): 1
-   ✓ Living Room Light turned ON (Brightness: 100%)
-   ```
-
-3. **Dim Device** (Option 3)
-   ```
-   🔅 DIMMABLE DEVICES:
-   1. Living Room Light [light-001]
-   2. Bedroom RGB Light [rgb-002]
-   Select device (1-2): 1
-   Enter dim level (0-100): 75
-   ✓ Living Room Light dimmed to 75%
-   ```
-
-## 🧪 Testing
-
-### Run All Tests
-```bash
-mvn test
-```
-
-### Test Coverage
-- ✅ Interface implementation validation
-- ✅ ISP compliance verification
-- ✅ Device functionality testing
-- ✅ Controller operations testing
-- ✅ Exception handling testing
-
-### Key Test Cases
-```java
-@Test
-@DisplayName("Simple Switch implements minimal interfaces")
-void testSimpleSwitchInterfaces() {
-    assertTrue(simpleSwitch instanceof Switchable);
-    assertTrue(simpleSwitch instanceof DeviceInfo);
-    assertFalse(simpleSwitch instanceof Dimmable);        // ISP!
-    assertFalse(simpleSwitch instanceof ColorControllable); // ISP!
-}
-```
-
-### Running Specific Tests
-```bash
-# Run only device tests
-mvn test -Dtest=DeviceTest
-
-# Run with verbose output
-mvn test -Dtest=DeviceTest -DforkCount=1 -DreuseForks=false
-```
-
-## 📁 Project Structure
-
-```
-smart-home-controller/
-├── pom.xml                              # Maven configuration
-├── README.md                            # This file
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── org/
-│   │           └── smarthome/
-│   │               ├── Main.java                    # Application entry point
-│   │               ├── interfaces/                  # ISP-compliant interfaces
-│   │               │   ├── Switchable.java         #   Basic switching
-│   │               ├── devices/                     # Device implementations
-│   │               │   ├── Light.java         #   Switch + Dim
-│   │               │   └── SimpleSwitch.java       #   Switch only (ISP!)
-│   └── test/
-│       └── java/
-│           └── LightTest.java              # Comprehensive tests
-```
-
-## 🔍 Code Quality Standards
-
-### Naming Conventions
-- **Classes**: PascalCase (`Light`)
-- **Methods**: camelCase (`turnOn()`)
-- **Packages**: lowercase (`org.example.smarthome.devices`)
-
-### Best Practices Implemented
-- ✅ Interface Segregation Principle
-- ✅ Single Responsibility Principle
-- ✅ Comprehensive JavaDoc documentation
-- ✅ Proper exception handling
-- ✅ Immutable fields where appropriate
-- ✅ Clean separation of concerns
-- ✅ Consistent code formatting
-- ✅ Comprehensive unit testing
-
-## 🛠️ Development Commands
-
-```bash
-# Clean and compile
-mvn clean compile
-
-# Run application
-mvn exec:java
-
-# Run tests with coverage
-mvn clean test
-
-# Package JAR
-mvn package
-
-# Run specific main class
-mvn exec:java -Dexec.mainClass="com.smarthome.Main"
-
-# Debug mode
-mvn exec:java -Dexec.args="-debug"
-```
+    You should see a `Process finished` message.
