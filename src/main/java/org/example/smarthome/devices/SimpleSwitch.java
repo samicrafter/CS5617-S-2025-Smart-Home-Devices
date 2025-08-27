@@ -1,25 +1,29 @@
 package org.example.smarthome.devices;
 
+
 import org.example.smarthome.interfaces.Switchable;
 
-public class Light implements Switchable {
+public class SimpleSwitch implements Switchable {
     private final String name;
-    private boolean turnedOn;
-    public Light(String name) {
+    private boolean isOn;
+
+    public SimpleSwitch(String name) {
         this.name = name;
     }
+
     @Override
     public void turnOn() {
-        this.turnedOn = true;
-        System.out.println(name + " is ON" );
+        isOn = true;
+        System.out.println(name + " is ON");
     }
+
     @Override
     public void turnOff() {
-        this.turnedOn = false;
+        isOn = false;
         System.out.println(name + " is OFF");
     }
-    @Override
+
     public boolean isOn() {
-        return this.turnedOn;
+        return false;
     }
 }

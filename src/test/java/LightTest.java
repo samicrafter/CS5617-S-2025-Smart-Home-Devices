@@ -1,35 +1,45 @@
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.example.smarthome.devices.Light;
+import org.example.smarthome.devices.SimpleSwitch;
+import org.example.smarthome.interfaces.Switchable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import static org.junit.jupiter.api.Assertions.*;
 
-class LightTest {
 
-    private Light light;
+public class LightTest {
+    private Light smartLight;
+    private SimpleSwitch simpleSwitch;
 
     @BeforeEach
     void setUp() {
-        light = new Light();
+        smartLight = new Light("Test Smart Light");
+        simpleSwitch = new SimpleSwitch("Test Switch");
+
     }
 
     @Test
-    void testInitialStateIsOff() {
-        assertFalse(light.isOn(), "Light should be off initially.");
+    @DisplayName("Smart Light implements only necessary interfaces")
+    void testSmartLightInterfaces() {
+        assertTrue(smartLight instanceof Switchable, "SmartLight should be Switchable");
     }
 
     @Test
-    void testTurnOnSetsIsOnToTrue() {
-        light.turnOn();
-        assertTrue(light.isOn(), "Light should be on after calling turnOn().");
+    @DisplayName("Simple Switch implements minimal interfaces")
+    void testSimpleSwitchInterfaces() {
+        assertTrue(simpleSwitch instanceof Switchable, "SimpleSwitch should be Switchable");
     }
 
     @Test
-    void testTurnOffSetsIsOnToFalse() {
-        light.turnOn();
-        light.turnOff();
-        assertFalse(light.isOn(), "Light should be off after calling turnOff().");
+    @DisplayName("Device switching functionality")
+    void testSwitchingFunctionality() {
+        assertFalse(smartLight.isOn(), "Device should start OFF");
+
+        smartLight.turnOn();
+        assertTrue(smartLight.isOn(), "Device should be ON after turnOn()");
+
+        smartLight.turnOff();
+        assertFalse(smartLight.isOn(), "Device should be OFF after turnOff()");
     }
 }
