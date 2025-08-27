@@ -1,27 +1,26 @@
-# 🏠 Smart Home Controller
 
-A Java Maven application demonstrating the **Interface Segregation Principle (ISP)** through a smart home device management system with a clean Text User Interface (TUI).
+Smart Home Devices
 
-## 🎯 Overview
+A Java Maven application demonstrating the Interface Segregation Principle (ISP) through a smart home device management system with a clean Text User Interface (TUI).
+
 
 Overview
 
 Interface Segregation is a principle that states that no client should be forced to depend on methods it does not use. We achieve this by splitting large, "fat" interfaces into smaller, more specific ones.
-
 The smaller interfaces are specific to a certain functionality. This prevents classes from having to implement methods that are not relevant to them, promoting the Single Responsibility Principle, flexibility, and loose coupling in our code.
 
-### Key Learning Objectives
+Key Learning Objectives
+✅ Understand Interface Segregation Principle (ISP)
+✅ See practical application of SOLID principles
+✅ Learn clean architecture patterns
+✅ Explore proper Java coding standards
+✅ Practice test-driven development
 
-- ✅ Understand Interface Segregation Principle (ISP)
-- ✅ See practical application of SOLID principles
-- ✅ Learn clean architecture patterns
-- ✅ Explore proper Java coding standards
-- ✅ Practice test-driven development
+🔧 Interface Segregation Principle
 
-## 🔧 Interface Segregation Principle
 
-### ❌ What We Avoid (ISP Violation)
-```java
+❌ What We Avoid (ISP Violation)
+
 // BAD: Fat interface forcing unnecessary implementations
 interface SmartDevice {
     void turnOn();           // ✓ All devices need this
@@ -30,213 +29,214 @@ interface SmartDevice {
     void setColor(String c); // ❌ Most devices don't need this
     void setTemp(int temp);  // ❌ Lights don't need this
 }
-```
 
-### ✅ What We Implement (ISP Compliant)
-```java
-// GOOD: Segregated interfaces
+
+
+✅ What We Implement (ISP Compliant)
+
+// GOOD: A focused, segregated interface
 interface Switchable {
     void turnOn();
     void turnOff();
     boolean isOn();
 }
 
-```
 
-## 🚀 Features
 
-### Device Types
-- **🔌 Simple Switch**: Basic on/off functionality
-- **💡 Smart Light**: Switching + dimming capabilities
+Features
+Device Types
+🔌 Simple Switch: Basic on/off functionality.
+💡 Smart Light: Switching and dimming capabilities.
 
-### Functionality
-- **Device Management**: Control devices
-- **Smart Operations**: Turn on/off
-- **Interactive TUI**: Clean text-based user interface
-- **Comprehensive Testing**: Unit tests demonstrating ISP compliance
+Functionality
+Device Management: Add, list, and control devices.
+Smart Operations: Turn devices on or off.
+Interactive TUI: Clean text-based user interface for easy control.
+Comprehensive Testing: Unit tests to demonstrate ISP compliance.
 
-### Interface Segregation Benefits
-- **No Bloated Contracts**: Devices implement only needed interfaces
-- **Easy Extension**: Add new device types without breaking existing code
-- **Clear Separation**: Each interface has a single, focused responsibility
-- **Better Maintainability**: Changes to one capability don't affect others
+Interface Segregation Benefits
+No Bloated Contracts: Devices implement only the interfaces they need.
+Easy Extension: Add new device types without breaking existing code.
+Clear Separation: Each interface has a single, focused responsibility.
+Better Maintainability: Changes to one capability don't affect others.
 
-## 🏗️ Architecture
+🏗️ Architecture
 
-```
-┌─────────────────┐    ┌─────────────────┐
-│   TUI Layer     │    │   Interfaces    │
-│                 │────│                 │
-│ SmartHomeTUI    │    │ Switchable      │
-└─────────────────┘    └─────────────────┘
-                               │
-                               │implements
-                               ▼
+┌───────────────┐      ┌─────────────────┐
+│   TUI Layer   │      │   Interfaces    │
+│               │──────│                 │
+│ SmartHomeTUI  │      │   Switchable    │
+└───────────────┘      └─────────────────┘
+                                │
+                                │ implements
+                                ▼
                        ┌─────────────────┐
-                       │   Device Impl.  │
+                       │  Device Impl.   │
                        │                 │
-                       │ Light           │
-                       │ SimpleSwitch    │
+                       │      Light      │
+                       │  SimpleSwitch   │
                        └─────────────────┘
-```
 
-## 📦 Installation
 
-### Prerequisites
-- ☕ **Java 17+**
-- 📦 **Maven 3.6+**
-- 💻 **IDE** (IntelliJ IDEA)
 
-### Setup Steps
+📦 Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/smart-home-controller.git
-   cd smart-home-controller
-   ```
+Prerequisites
+☕ Java 17+
+📦 Maven 3.6+
+💻 IDE (e.g., IntelliJ IDEA)
 
-2. **Verify Java and Maven**
-   ```bash
-   java --version
-   mvn --version
-   ```
+Setup Steps
+Clone the repository
+Bash
+git clone https://github.com/yourusername/smart-home-controller.git
+cd smart-home-controller
 
-3. **Build the project**
-   ```bash
-   mvn clean compile
-   ```
 
-4. **Run tests**
-   ```bash
-   mvn test
-   ```
+Verify Java and Maven
+Bash
+java --version
+mvn --version
 
-5. **Start the application**
-   ```bash
-   mvn exec:java
-   ```
 
-## 🎮 Usage
+Build the project
+Bash
+mvn clean compile
 
-### Running the Application
 
-```bash
+Run tests
+Bash
+mvn test
+
+
+Start the application
+Bash
 mvn exec:java
-```
 
-### Main Menu Options
 
-```
+
+Usage
+
+Running the Application
+
+mvn exec:java
+
+
+
+Main Menu Options
+
 ╔══════════════════════════════════╗
-║    🏠 Smart Home Controller      ║
-║   Interface Segregation Demo     ║
+║    🏠 Smart Home Controller     ║
+║   Interface Segregation Demo    ║
 ╚══════════════════════════════════╝
 
 📋 MENU OPTIONS:
 1. 💡 Turn On Device
 2. ⚫ Turn Off Device
 3. ❌ Exit
-```
 
-### Example Usage Flow
 
-1. **Turn On Device** (Option 1)
-   ```
-   Select device to turn ON:
-   1. Living Room Light [light-001] - OFF
-   Select device (1-2): 1
-   ✓ Living Room Light turned ON (Brightness: 100%)
-   ```
 
-## 🧪 Testing
+Example Usage Flow
 
-### Run All Tests
-```bash
+Turn On Device (Option 1)
+Select device to turn ON:
+1. Living Room Light [light-001] - OFF
+Select device (1-2): 1
+✓ Living Room Light turned ON (Brightness: 100%)
+
+
+
+Testing
+
+
+Run All Tests
 mvn test
-```
 
-### Test Coverage
-- ✅ Interface implementation validation
-- ✅ ISP compliance verification
-- ✅ Device functionality testing
-- ✅ Controller operations testing
-- ✅ Exception handling testing
 
-### Key Test Cases
-```java
+
+Test Coverage
+
+✅ Interface implementation validation
+✅ ISP compliance verification
+✅ Device functionality testing
+✅ Controller operations testing
+✅ Exception handling testing
+
+Key Test Cases
+
 @Test
 @DisplayName("Simple Switch implements minimal interfaces")
 void testSimpleSwitchInterfaces() {
-    assertTrue(simpleSwitch instanceof Switchable); //ISP
+    assertTrue(simpleSwitch instanceof Switchable); // ISP in action!
 }
-```
 
-### Running Specific Tests
-```bash
+
+
+Running Specific Tests
+
 # Run only device tests
 mvn test -Dtest=DeviceTest
 
 # Run with verbose output
 mvn test -Dtest=DeviceTest -DforkCount=1 -DreuseForks=false
-```
 
-## 📁 Project Structure
 
-```
+
+📁 Project Structure
+
 smart-home-controller/
-├── pom.xml                              # Maven configuration
-├── README.md                            # This file
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── org/
-│   │           └── smarthome/
-│   │               ├── Main.java                    # Application entry point
-│   │               ├── interfaces/                  # ISP-compliant interfaces
-│   │               │   ├── Switchable.java         #   Basic switching
-│   │               ├── devices/                     # Device implementations
-│   │               │   ├── Light.java         #   Switch + Dim
-│   │               │   └── SimpleSwitch.java       #   Switch only (ISP!)
-│   └── test/
-│       └── java/
-│           └── LightTest.java              # Comprehensive tests
-```
+├── pom.xml                   # Maven configuration
+├── README.md                 # This file
+└── src/
+    ├── main/
+    │   └── java/
+    │       └── org/
+    │           └── smarthome/
+    │               ├── Main.java             # Application entry point
+    │               ├── interfaces/           # ISP-compliant interfaces
+    │               │   └── Switchable.java   #   - Basic switching
+    │               └── devices/              # Device implementations
+    │                   ├── Light.java        #   - Switch + Dim
+    │                   └── SimpleSwitch.java #   - Switch only (ISP!)
+    └── test/
+        └── java/
+            └── LightTest.java      # Comprehensive tests
 
-## 🔍 Code Quality Standards
 
-### Naming Conventions
-- **Classes**: PascalCase (`Light`)
-- **Methods**: camelCase (`turnOn()`)
-- **Packages**: lowercase (`org.example.smarthome.devices`)
 
-### Best Practices Implemented
-- ✅ Interface Segregation Principle
-- ✅ Single Responsibility Principle
-- ✅ Comprehensive JavaDoc documentation
-- ✅ Proper exception handling
-- ✅ Immutable fields where appropriate
-- ✅ Clean separation of concerns
-- ✅ Consistent code formatting
-- ✅ Comprehensive unit testing
+🔍 Code Quality Standards
 
-## 🛠️ Development Commands
 
-```bash
-# Clean and compile
+Naming Conventions
+
+Classes: PascalCase (e.g., Light)
+Methods: camelCase (e.g., turnOn())
+Packages: lowercase (e.g., org.example.smarthome.devices)
+
+Best Practices Implemented
+
+✅ Interface Segregation Principle
+✅ Single Responsibility Principle
+✅ Comprehensive JavaDoc documentation
+✅ Proper exception handling
+✅ Clean separation of concerns
+✅ Consistent code formatting
+
+🛠️ Development Commands
+
+
+# Clean and compile the project
 mvn clean compile
 
-# Run application
+# Run the main application
 mvn exec:java
 
-# Run tests with coverage
+# Run all unit tests
 mvn clean test
 
-# Package JAR
+# Package the application into a JAR file
 mvn package
 
-# Run specific main class
+# Run a specific main class
 mvn exec:java -Dexec.mainClass="com.smarthome.Main"
-
-# Debug mode
-mvn exec:java -Dexec.args="-debug"
-```
