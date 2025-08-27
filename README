@@ -247,36 +247,25 @@ smart-home-controller/
 ├── src/
 │   ├── main/
 │   │   └── java/
-│   │       └── com/
+│   │       └── org/
 │   │           └── smarthome/
 │   │               ├── Main.java                    # Application entry point
 │   │               ├── interfaces/                  # ISP-compliant interfaces
 │   │               │   ├── Switchable.java         #   Basic switching
-│   │               │   ├── Dimmable.java           #   Dimming capability
-│   │               │   ├── ColorControllable.java  #   Color control
-│   │               │   └── DeviceInfo.java         #   Device information
 │   │               ├── devices/                     # Device implementations
-│   │               │   ├── SmartLight.java         #   Switch + Dim
-│   │               │   ├── ColorfulLight.java      #   Switch + Dim + Color
+│   │               │   ├── Light.java         #   Switch + Dim
 │   │               │   └── SimpleSwitch.java       #   Switch only (ISP!)
-│   │               ├── controller/
-│   │               │   └── DeviceController.java   # Device management
-│   │               └── ui/
-│   │                   └── SmartHomeTUI.java       # Text user interface
 │   └── test/
 │       └── java/
-│           └── com/
-│               └── smarthome/
-│                   └── DeviceTest.java              # Comprehensive tests
+│           └── LightTest.java              # Comprehensive tests
 ```
 
 ## 🔍 Code Quality Standards
 
 ### Naming Conventions
-- **Classes**: PascalCase (`SmartLight`, `DeviceController`)
-- **Methods**: camelCase (`turnOn()`, `getDimLevel()`)
-- **Constants**: UPPER_SNAKE_CASE (`MAX_DIM_LEVEL`)
-- **Packages**: lowercase (`com.smarthome.devices`)
+- **Classes**: PascalCase (`Light`)
+- **Methods**: camelCase (`turnOn()`)
+- **Packages**: lowercase (`org.example.smarthome.devices`)
 
 ### Best Practices Implemented
 - ✅ Interface Segregation Principle
@@ -309,39 +298,3 @@ mvn exec:java -Dexec.mainClass="com.smarthome.Main"
 # Debug mode
 mvn exec:java -Dexec.args="-debug"
 ```
-
-## 📚 Learning Resources
-
-### SOLID Principles
-- [Interface Segregation Principle Explained](https://www.baeldung.com/java-interface-segregation)
-- [SOLID Principles in Java](https://www.digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
-
-### Java Best Practices
-- [Java Code Conventions](https://www.oracle.com/java/technologies/javase/codeconventions-contents.html)
-- [Effective Java by Joshua Bloch](https://www.oreilly.com/library/view/effective-java/9780134686097/)
-
-## 🤝 Contributing
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
-
-### Contribution Guidelines
-- Follow existing code style and conventions
-- Add tests for new functionality
-- Update documentation as needed
-- Ensure all tests pass before submitting
-- Write meaningful commit messages
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **SOLID Principles** - Robert C. Martin
-- **Clean Architecture** concepts
-- **Java Community** best practices
-- **Maven** build tool ecosystem
